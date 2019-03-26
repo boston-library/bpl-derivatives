@@ -7,7 +7,7 @@ module BPL
 
       # Use the output service configured for this class or default to the global setting
       def self.output_file_service
-        @output_file_service || BPL::Derivatives.output_file_service
+        @output_file_service || BPL::Derivatives.config.output_file_service
       end
 
       class << self
@@ -16,7 +16,7 @@ module BPL
 
       # Use the source service configured for this class or default to the global setting
       def self.source_file_service
-        @source_file_service || BPL::Derivatives.source_file_service
+        @source_file_service || BPL::Derivatives.config.source_file_service
       end
 
       # @param [String, ActiveFedora::Base] object_or_filename path to the source file, or an object

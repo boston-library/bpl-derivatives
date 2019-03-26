@@ -18,7 +18,7 @@ module BPL::Derivatives
       private
 
       def logger
-        BPL::Derivatives.base_logger || ::Logger.new(STDOUT)
+        BPL::Derivatives.config.base_logger
       end
     end
   end

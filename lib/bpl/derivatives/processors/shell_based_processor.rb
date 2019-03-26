@@ -10,7 +10,7 @@ module BPL::Derivatives::Processors
     BLOCK_SIZE = 1024
 
     included do
-      class_attribute :timeout
+      cattr_accessor :timeout
       extend Open3
     end
 
@@ -35,7 +35,7 @@ module BPL::Derivatives::Processors
     end
 
     def output_file(file_suffix)
-      Dir::Tmpname.create(['sufia', ".#{file_suffix}"], Hydra::Derivatives.temp_file_base) {}
+      Dir::Tmpname.create(['sufia', ".#{file_suffix}"], BPL::Derivatives.temp_file_base) {}
     end
 
     module ClassMethods

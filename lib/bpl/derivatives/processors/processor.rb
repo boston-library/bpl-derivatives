@@ -12,7 +12,7 @@ module BPL::Derivatives::Processors
     def initialize(source_path, directives, opts = {})
       self.source_path = source_path
       self.directives = directives
-      self.output_file_service = opts.fetch(:output_file_service, BPL::Derivatives.output_file_service)
+      self.output_file_service = opts.fetch(:output_file_service, BPL::Derivatives.config.output_file_service)
     end
 
     def process

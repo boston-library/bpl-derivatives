@@ -2,7 +2,7 @@ require 'mini_magick'
 
 module BPL::Derivatives::Processors
   class Image < Processor
-    class_attribute :timeout
+    cattr_accessor :timeout
 
     def process
       timeout ? process_with_timeout : create_resized_image

@@ -17,8 +17,8 @@ module BPL::Derivatives::Processors
       def kdu_compress_recipe(args, quality, long_dim)
         if args[:recipe].is_a? Symbol
           recipe = [args[:recipe].to_s, quality].join('_').to_sym
-          return BPL::Derivatives.kdu_compress_recipes[recipe] if BPL::Derivatives.kdu_compress_recipes.key? recipe
-          BPL::Derivatives.base_logger.warn "No JP2 recipe for :#{args[:recipe]} ('#{recipe}') found in configuration. Using best guess."
+          return BPL::Derivatives.config.kdu_compress_recipes[recipe] if BPL::Derivatives.config.kdu_compress_recipes.key? recipe
+          BPL::Derivatives.config.base_logger.warn "No JP2 recipe for :#{args[:recipe]} ('#{recipe}') found in configuration. Using best guess."
           calculate_recipe(args, quality, long_dim)
         elsif args[:recipe].is_a? String
           args[:recipe]
@@ -71,12 +71,12 @@ module BPL::Derivatives::Processors
       end
 
       def encode(path, recipe, output_file)
-        kdu_compress = BPL::Derivatives.kdu_compress_path
+        kdu_compress = BPL::Derivatives.config.kdu_compress_path
         execute "#{kdu_compress} -quiet -i #{Shellwords.escape(path)} -o #{output_file} #{recipe}"
       end
 
       def tmp_file(ext)
-        Dir::Tmpname.create(['sufia', ext], BPL::Derivatives.temp_file_base) {}
+        Dir::Tmpname.create(['sufia', ext], BPL::Derivatives.config.temp_file_base) {}
       end
 
       def long_dim(image)

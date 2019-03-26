@@ -7,14 +7,13 @@ module BPL::Derivatives
     end
 
     # autoload :ActiveEncode
-    # autoload :Audio
+    autoload :Audio
     autoload :Document
-    # autoload :Ffmpeg
-    # autoload :FullText
+    autoload :Ffmpeg
     autoload :Image
     autoload :Jpeg2kImage
     autoload :RawImage
     autoload :ShellBasedProcessor
-    # autoload :Video
+    autoload :Video
   end
 end
