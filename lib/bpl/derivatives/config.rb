@@ -3,12 +3,12 @@ require 'tmpdir'
 module BPL::Derivatives
   class Config
     CONFIG_METHODS = %i[ffmpeg_path libreoffice_path temp_file_base fits_path kdu_compress_path
-                       kdu_compress_recipes enable_ffmpeg source_file_service output_file_service active_encode_poll_time].freeze
+                       kdu_compress_recipes enable_ffmpeg source_file_service output_file_service active_encode_poll_time output_object_class].freeze
 
     attr_accessor :ffmpeg_path, :libreoffice_path, :temp_file_base,
                 :source_file_service, :output_file_service, :fits_path,
                 :enable_ffmpeg, :kdu_compress_path, :kdu_compress_recipes,
-                :active_encode_poll_time, :base_logger
+                :active_encode_poll_time, :base_logger, :output_object_class
 
     def initialize
       @ffmpeg_path ||= 'ffmpeg'
@@ -51,6 +51,7 @@ module BPL::Derivatives
       }
       @active_encode_poll_time ||= 10
       @base_logger ||= ::Logger.new(STDOUT)
+      @output_object_class ||= "ActiveFedora::File"
     end
 
     def enable_ffmpeg

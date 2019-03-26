@@ -18,6 +18,7 @@ describe "the configuration" do
     expect(subject.output_file_service).to eq(BPL::Derivatives::PersistBasicContainedOutputFileService)
     expect(subject.source_file_service).to eq(BPL::Derivatives::RetrieveSourceFileService)
     expect(subject.base_logger).to be_a_kind_of(::Logger)
+    expect(subject.output_object_class).to eq("ActiveFedora::File")
   end
 
   it "lets you change the configuration" do

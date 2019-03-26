@@ -30,7 +30,7 @@ module BPL::Derivatives::Processors
     def encode_file(file_suffix, options)
       temp_file_name = output_file(file_suffix)
       self.class.encode(source_path, options, temp_file_name)
-      output_file_service.call(File.open(temp_file_name, 'rb'), directives)
+      finalize_derivative_output(File.open(temp_file_name, 'rb'))
       File.unlink(temp_file_name)
     end
 

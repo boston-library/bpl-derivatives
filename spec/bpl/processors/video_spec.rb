@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe BPL::Derivatives::Processors::Video::Processor do
-  subject { described_class.new(file_name, directives) }
+  subject { described_class.new(file_object, directives) }
 
-  let(:file_name) { 'foo/bar.mov' }
+  let(:file_object) { BPL::Derivatives::InputObjectDecorator.new('foo/bar.mov') }
 
   describe ".config" do
     before do

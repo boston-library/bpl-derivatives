@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe BPL::Derivatives::Processors::Document do
-  subject { described_class.new(source_path, directives) }
+  subject { described_class.new(source_object, directives) }
 
-  let(:source_path)    { File.join(fixture_path, "test.doc") }
+  let(:source_object)    { BPL::Derivatives::InputObjectDecorator.new(File.join(fixture_path, "test.doc")) }
   let(:output_service) { BPL::Derivatives::PersistBasicContainedOutputFileService }
 
   before { allow(subject).to receive(:converted_file).and_return(converted_file) }
@@ -11,7 +11,7 @@ describe BPL::Derivatives::Processors::Document do
   describe "#encode_file" do
     context "when converting to jpg" do
       let(:directives)     { { format: "jpg" } }
-      let(:converted_file) { "path/to/pdf/created/from/original" }
+      let(:converted_file) { BPL::Derivatives::InputObjectDecorator.new("path/to/pdf/created/from/original") }
       let(:mock_processor) { double }
 
       before do

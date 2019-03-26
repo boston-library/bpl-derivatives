@@ -6,8 +6,7 @@ module BPL::Derivatives
     # @option options [Symbol] :source a method that can be called on the object to retrieve the source file
     # @yield [Tempfile] a temporary source file that has a lifetime of the block
     def self.call(object, options, &block)
-      source_name = options.fetch(:source)
-      BPL::Derivatives::DatastreamTempfileService.create(object.send(source_name), &block)
+      BPL::Derivatives::TempfileService.create(object, &block)
     end
   end
 end

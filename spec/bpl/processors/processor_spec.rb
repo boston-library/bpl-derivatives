@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe BPL::Derivatives::Processors::Processor do
-  subject { described_class.new(file_path, directives) }
+  subject { described_class.new(file_object, directives) }
 
   let(:object)        { "Fake Object" }
   let(:source_name)   { 'content' }
   let(:directives)    { { thumb: "100x100>" } }
-  let(:file_path)     { double }
+  let(:file_object)   { BPL::Derivatives::InputObjectDecorator.new('/foo/bar/path.txt') }
 
   describe "output_file_service" do
     let(:custom_output_file_service) { "fake service" }
@@ -23,7 +23,7 @@ describe BPL::Derivatives::Processors::Processor do
 
     context "with an instance level configuration setting" do
       subject do
-        described_class.new('/opt/derivatives/foo.mp4', directives,
+        described_class.new(BPL::Derivatives::InputObjectDecorator.new('/opt/derivatives/foo.mp4'), directives,
                             output_file_service: another_custom_output_file_service)
       end
 

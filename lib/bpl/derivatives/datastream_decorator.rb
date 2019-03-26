@@ -1,30 +1,27 @@
 require 'delegate'
 module BPL::Derivatives
-  class DatastreamDecorator < SimpleDelegator
-    def initialize(datastream)
-      super(datastream)
+  class DatastreamDecorator < InputObjectDecorator
+    attr_accessor :source_datastream
+    def initialize(object, source_datastream_name)
+      super(object)
+      self.source_datastream = object.send(source_datastream_name)
     end
 
-    def to_tempfile(&block)
-      return unless has_content?
-      Tempfile.open(filename_for_characterization) do |f|
-        f.binmode
-        if content.respond_to? :read
-          f.write(content.read)
-        else
-          f.write(content)
-        end
-        content.rewind if content.respond_to? :rewind
-        f.rewind
-        yield(f, filename_for_characterization)
-      end
+    def content
+      self.source_datastream.content
+    end
+
+    def has_content?
+      self.source_datastream.has_content?
     end
 
     def filename_for_characterization
-      registered_mime_type = BPL::Derivatives::MimeTypeService.from_datastream(mimeType)
-      BPL::Derivatives.base_logger.warn "Unable to find a registered mime type for #{mimeType.inspect} on #{pid}" unless registered_mime_type
+      registered_mime_type = BPL::Derivatives::MimeTypeService.from_datastream(source_datastream.mimeType)
+      BPL::Derivatives.base_logger.warn "Unable to find a registered mime type for #{source_datastream.mimeType.inspect} on #{pid}" unless registered_mime_type
       extension = registered_mime_type ? ".#{registered_mime_type.extensions.first}" : ''
-      ["#{pid}-#{dsVersionID}", "#{extension}"]
+      ["#{source_datastream.pid}-#{source_datastream.dsVersionID}", "#{extension}"]
     end
+
+
   end
 end

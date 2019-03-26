@@ -14,7 +14,7 @@ module BPL
 
     autoload_under 'runners' do
       # autoload :ActiveEncodeDerivatives
-      # autoload :AudioDerivatives
+      autoload :AudioDerivatives
       autoload :DocumentDerivatives
       autoload :ImageDerivatives
       autoload :Jpeg2kImageDerivatives
@@ -28,9 +28,10 @@ module BPL
     autoload :Logger
     autoload :Processors
     autoload :TempfileService
-    autoload :DatastreamTempfileService
     autoload :IoDecorator
+    autoload :InputObjectDecorator
     autoload :DatastreamDecorator
+    autoload :OutputObjectDecorator
     autoload :AudioEncoder
 
 
@@ -66,9 +67,9 @@ module BPL
       self.class.config
     end
 
-    def derivatize(datastream_name, transform_directives, opts={})
+    def derivatize(opts={})
       runner = opts[:runner] ? opts.delete(:runner) : :image
-      "BPL::Derivatives::#{runner.to_s.classify}".constantize.new(self, transform_directives,op)
+      "BPL::Derivatives::#{runner.to_s.classify}".constantize.new(self, opts)
     end
 
   end

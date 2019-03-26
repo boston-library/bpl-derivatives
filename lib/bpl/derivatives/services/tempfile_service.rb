@@ -2,20 +2,20 @@ require 'mime/types'
 
 module BPL::Derivatives
   class TempfileService
-    def self.create(file, &block)
-      new(file).tempfile(&block)
+    def self.create(object, &block)
+      new(object).tempfile(&block)
     end
 
-    attr_reader :source_file
+    attr_reader :source_object, :source_file
 
-    def initialize(source_file)
-      @source_file = source_file
+    def initialize(source_object)
+      @source_object = source_object
     end
 
     def tempfile(&block)
-      if source_file.respond_to? :to_tempfile
-        source_file.send(:to_tempfile, &block)
-      elsif source_file.has_content?
+      if source_object.respond_to? :to_tempfile
+        source_object.send(:to_tempfile, &block)
+      elsif source_object.has_content?
         default_tempfile(&block)
       end
     end
@@ -23,7 +23,7 @@ module BPL::Derivatives
     def default_tempfile(&_block)
       Tempfile.open(filename_for_characterization) do |f|
         f.binmode
-        if source_file.content.respond_to? :read
+        if source_object.source_file.content.respond_to? :read
           f.write(source_file.content.read)
         else
           f.write(source_file.content)
@@ -34,8 +34,18 @@ module BPL::Derivatives
       end
     end
 
+    protected
+
     def filename_for_characterization
-      registered_mime_type = MIME::Types[source_file.mime_type].first
+      if source_object.respond_to? :filename_for_characterization
+        source_object.filename_for_characterization
+      else
+        default_filename_for_characterization
+      end
+    end
+
+    def default_filename_for_characterization
+      registered_mime_type = MIME::Types[source_object.mime_type].first
       BPL::Derivatives.base_logger.warn "Unable to find a registered mime type for #{source_file.mime_type.inspect} on #{source_file.uri}" unless registered_mime_type
       extension = registered_mime_type ? ".#{registered_mime_type.extensions.first}" : ''
       version_id = 1 # TODO: fixme

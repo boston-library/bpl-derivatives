@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe BPL::Derivatives::Processors::Image do
-  subject { described_class.new(file_name, directives) }
+  subject { described_class.new(input_object, directives) }
 
-  let(:file_name) { "file_name" }
+  let(:input_object) {BPL::Derivatives::InputObjectDecorator.new("file_name") }
 
   context "when arguments are passed as a hash" do
     before { allow(subject).to receive(:load_image_transformer).and_return(mock_image) }

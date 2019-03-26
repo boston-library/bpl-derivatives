@@ -39,7 +39,7 @@ module BPL::Derivatives::Processors
         output_io = StringIO.new
         xfrm.write(output_io)
         output_io.rewind
-        output_file_service.call(output_io, directives)
+        finalize_derivative_output(output_io)
       end
 
       # Override this method if you want a different transformer, or need to load the

@@ -108,7 +108,7 @@ module BPL::Derivatives::Processors
           self.class.encode(f.path, recipe, output_file)
         end
       end
-      output_file_service.call(File.open(output_file, 'rb'), directives)
+      finalize_derivative_output(File.open(output_file, 'rb'))
       File.unlink(output_file)
     end
 

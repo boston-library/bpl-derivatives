@@ -9,12 +9,12 @@ module BPL::Derivatives
     #
     # NOTE: Uses basic containment. If you want to use direct containment (ie. with PCDM) you must use a different service (ie. Hydra::Works::AddFileToGenericFile Service)
     #
-    # @param [IO,String] content the data to be persisted
+    # @param [BPL::Derivatives::OutputObjectDecorator] content the data to be persisted
     # @param [Hash] directives directions which can be used to determine where to persist to.
     # @option directives [String] url This can determine the path of the object.
     # @option directives [String] format The file extension (e.g. 'jpg')
-    def self.call(content, directives)
-      file = io(content, directives)
+    def self.call(object, directives)
+      file = io(object.content, directives)
       remote_file = retrieve_remote_file(directives)
       remote_file.content = file
       remote_file.mime_type = determine_mime_type(file)
@@ -22,12 +22,30 @@ module BPL::Derivatives
       remote_file.save
     end
 
+    # @param file [Hydra::Derivatives::IoDecorator]
+    def self.determine_original_name(file)
+      if file.respond_to? :original_filename
+        file.original_filename
+      else
+        "derivative"
+      end
+    end
+
+    # @param file [Hydra::Derivatives::IoDecorator]
+    def self.determine_mime_type(file)
+      if file.respond_to? :mime_type
+        file.mime_type
+      else
+        "appliction/octet-stream"
+      end
+    end
+
     # Override this implementation if you need a remote file from a different location
     # @return [OutputObjectDelegator]
     def self.retrieve_remote_file(directives)
       uri = URI(directives.fetch(:url))
       raise ArgumentError, "#{uri} is not an http uri" unless uri.scheme == 'http'
-      ActiveFedora::File.new(uri.to_s)
+      BPL::Derivatives.config.output_file_class.constantize.new(uri.to_s)
     end
     private_class_method :retrieve_remote_file
 

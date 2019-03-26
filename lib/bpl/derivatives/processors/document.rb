@@ -23,7 +23,7 @@ module BPL::Derivatives::Processors
         if directives.fetch(:format) == "jpg"
           BPL::Derivatives::Processors::Image.new(converted_file, directives).process
         else
-          output_file_service.call(File.read(converted_file), directives)
+          finalize_derivative_output(File.read(converted_file))
         end
       end
 
