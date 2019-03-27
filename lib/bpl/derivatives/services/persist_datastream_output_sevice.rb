@@ -3,6 +3,7 @@ module BPL::Derivatives
     def self.call(object, directives)
       datastream = retrieve_datastream(object.original_object, directives)
       datastream.content = object.content
+      datastream.mimeType = determine_mime_type(directives.fetch(:format))
       datastream.save
     end
 
@@ -11,7 +12,7 @@ module BPL::Derivatives
       raise ArgumentError, "#{dsid} is blank" if dsid.blank?
       output_datastream(object, dsid)
     end
-    private_class_method :retrieve_remote_file
+    private_class_method :retrieve_datastream
 
 
     def self.output_datastream(object, dsid)

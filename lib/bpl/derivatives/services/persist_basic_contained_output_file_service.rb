@@ -69,17 +69,5 @@ module BPL::Derivatives
       content.encoding.name if content.respond_to?(:encoding)
     end
     private_class_method :charset
-
-    def self.mime_format(extension)
-      case extension
-      when 'mp4'
-        'video/mp4' # default is application/mp4
-      when 'webm'
-        'video/webm' # default is audio/webm
-      else
-        MIME::Types.type_for(extension).first.to_s
-      end
-    end
-    private_class_method :mime_format
   end
 end

@@ -8,5 +8,17 @@ module BPL::Derivatives
     def self.call(__object_or_file_path, _directives)
       raise NotImplementedError, "PersistOutputFileService is an abstract class. Implement `call' on #{self.class.name}"
     end
+
+    def self.mime_format(extension)
+      case extension
+      when 'mp4'
+        'video/mp4' # default is application/mp4
+      when 'webm'
+        'video/webm' # default is audio/webm
+      else
+        MIME::Types.type_for(extension).first.to_s
+      end
+    end
+    private_class_method :mime_format
   end
 end

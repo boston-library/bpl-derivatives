@@ -3,7 +3,7 @@ module BPL::Derivatives::Processors
     include ShellBasedProcessor
 
     def self.encode(path, format, outdir)
-      execute "#{BPL::Derivatives.libreoffice_path} --invisible --headless --convert-to #{format} --outdir #{outdir} #{Shellwords.escape(path)}"
+      execute "#{BPL::Derivatives.config.libreoffice_path} --invisible --headless --convert-to #{format} --outdir #{outdir} #{Shellwords.escape(path)}"
     end
 
     # Converts the document to the format specified in the directives hash.
@@ -21,11 +21,13 @@ module BPL::Derivatives::Processors
       # so we can get a better conversion with resizing options. Otherwise, the ::encode method is used.
       def convert_to_format
         if directives.fetch(:format) == "jpg"
-          BPL::Derivatives::Processors::Image.new(converted_file, directives).process
+          object.source_path = converted_file
+          BPL::Derivatives::Processors::Image.new(object, directives).process
         else
           finalize_derivative_output(File.read(converted_file))
         end
       end
+
 
       def converted_file
         @converted_file ||= if directives.fetch(:format) == "jpg"
@@ -36,8 +38,8 @@ module BPL::Derivatives::Processors
       end
 
       def convert_to(format)
-        self.class.encode(source_path, format, BPL::Derivatives.temp_file_base)
-        File.join(BPL::Derivatives.temp_file_base, [File.basename(source_path, ".*"), format].join('.'))
+        self.class.encode(source_path, format, BPL::Derivatives.config.temp_file_base)
+        File.join(BPL::Derivatives.config.temp_file_base, [File.basename(source_path, ".*"), format].join('.'))
       end
   end
 end

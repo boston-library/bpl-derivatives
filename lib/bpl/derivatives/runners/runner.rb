@@ -23,7 +23,7 @@ module BPL
       # @param [Hash] options options to pass to the encoder
       # @options options [Array] :outputs a list of desired outputs, each entry is a hash that has :label (optional), :format and :url
       def self.create(object_or_filename, options)
-        io_object = input_object(object_or_filename)
+        io_object = input_object(object_or_filename, options)
         source_file(io_object, options) do |f|
           io_object.source_path = f.path
           transform_directives(options.delete(:outputs)).each do |instructions|

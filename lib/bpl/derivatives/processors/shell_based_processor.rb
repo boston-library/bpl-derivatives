@@ -80,8 +80,9 @@ module BPL::Derivatives::Processors
               when stderr.fileno
                 err_str << data
               end
-            rescue EOFError
+            rescue EOFError => e
               BPL::Derivatives::Logger.debug "Caught an eof error in ShellBasedProcessor"
+              BPL::Derivatives::Logger.debug "#{e.message}"
               # No big deal.
             end
           end

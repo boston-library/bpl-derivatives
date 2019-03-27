@@ -1,6 +1,6 @@
 require "bpl/derivatives/version"
-require 'awesome_print'
-require 'active_support'
+require 'active_support/all'
+
 
 module BPL
   module Derivatives
@@ -37,10 +37,10 @@ module BPL
 
     autoload_under 'services' do
       autoload :RetrieveSourceFileService
-      # autoload :RemoteSourceFile
       autoload :PersistOutputFileService
       autoload :PersistBasicContainedOutputFileService
-      autoload :PersistExternalFileOutputFileService
+      autoload :PersistDatastreamOutputService
+      autoload :PersistFileSystemOutputService
       autoload :TempfileService
       autoload :DatastreamTempfileService
       autoload :MimeTypeService

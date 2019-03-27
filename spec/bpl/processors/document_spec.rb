@@ -7,15 +7,15 @@ describe BPL::Derivatives::Processors::Document do
   let(:output_service) { BPL::Derivatives::PersistBasicContainedOutputFileService }
 
   before { allow(subject).to receive(:converted_file).and_return(converted_file) }
-
   describe "#encode_file" do
     context "when converting to jpg" do
       let(:directives)     { { format: "jpg" } }
-      let(:converted_file) { BPL::Derivatives::InputObjectDecorator.new("path/to/pdf/created/from/original") }
+      let(:converted_file) { "path/to/pdf/created/from/original" }
       let(:mock_processor) { double }
 
       before do
-        allow(BPL::Derivatives::Processors::Image).to receive(:new).with(converted_file, directives).and_return(mock_processor)
+        source_object.source_path = converted_file
+        allow(BPL::Derivatives::Processors::Image).to receive(:new).with(source_object, directives).and_return(mock_processor)
       end
 
       it "creates a thumbnail of the document using a pdf created from the original" do

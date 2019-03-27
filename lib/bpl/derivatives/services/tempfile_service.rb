@@ -6,7 +6,7 @@ module BPL::Derivatives
       new(object).tempfile(&block)
     end
 
-    attr_reader :source_object, :source_file
+    attr_reader :source_object
 
     def initialize(source_object)
       @source_object = source_object

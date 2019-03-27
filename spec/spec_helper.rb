@@ -8,9 +8,8 @@ SimpleCov.start do
 end
 Coveralls.wear!
 
-require "bpl/derivatives"
 require 'awesome_print'
-require 'pry'
+require "bpl/derivatives"
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"

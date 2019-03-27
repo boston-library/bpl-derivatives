@@ -32,6 +32,7 @@ module BPL::Derivatives::Processors
         yield(xfrm) if block_given?
         xfrm.format(directives.fetch(:format))
         xfrm.quality(quality.to_s) if quality
+        xfrm.density(density.to_s) if density
         write_image(xfrm)
       end
 
@@ -39,7 +40,7 @@ module BPL::Derivatives::Processors
         output_io = StringIO.new
         xfrm.write(output_io)
         output_io.rewind
-        finalize_derivative_output(output_io)
+        finalize_derivative_output(output_io.read)
       end
 
       # Override this method if you want a different transformer, or need to load the
@@ -56,6 +57,10 @@ module BPL::Derivatives::Processors
 
       def quality
         directives.fetch(:quality, nil)
+      end
+
+      def density
+        directives.fetch(:density, nil)
       end
 
       def selected_layers(image)

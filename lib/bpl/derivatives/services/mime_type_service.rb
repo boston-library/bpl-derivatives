@@ -7,7 +7,7 @@ module BPL::Derivatives
       MIME::Types.type_for(file_path).first.to_s
     end
 
-    def self.from_datastream(m_type)
+    def self.type_lookup(m_type)
       MIME::Types[m_type].first
     end
   end
