@@ -41,7 +41,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'addressable', '~> 2.5'
   spec.add_dependency 'mime-types', '> 2.0', '< 4.0'
   spec.add_dependency 'mini_magick', '>= 3.2', '< 5'
-  spec.add_dependency 'hydra-file_characterization', '~> 1.0.0'
 
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake", "~> 10.0"

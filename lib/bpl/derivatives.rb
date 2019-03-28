@@ -13,7 +13,6 @@ module BPL
 
 
     autoload_under 'runners' do
-      # autoload :ActiveEncodeDerivatives
       autoload :AudioDerivatives
       autoload :DocumentDerivatives
       autoload :ImageDerivatives
@@ -71,6 +70,5 @@ module BPL
       runner = opts[:runner] ? opts.delete(:runner) : :image
       "BPL::Derivatives::#{runner.to_s.classify}".constantize.new(self, opts)
     end
-
   end
 end
