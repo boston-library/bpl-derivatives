@@ -7,6 +7,10 @@ module BPL::Derivatives
       datastream.save
     end
 
+    def self.determine_mime_type(format)
+      mime_format(format)
+    end
+
     def self.retrieve_datastream(object, directives)
       dsid = directives.fetch(:dsid)
       raise ArgumentError, "#{dsid} is blank" if dsid.blank?
