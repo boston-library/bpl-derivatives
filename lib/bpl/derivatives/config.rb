@@ -10,6 +10,8 @@ module BPL::Derivatives
                 :enable_ffmpeg, :kdu_compress_path, :kdu_compress_recipes,
                 :active_encode_poll_time, :base_logger, :output_object_class
 
+    alias_method :jp2_recipes=, :kdu_compress_recipes=
+
     def initialize
       @ffmpeg_path ||= 'ffmpeg'
       @libreoffice_path ||= 'soffice'

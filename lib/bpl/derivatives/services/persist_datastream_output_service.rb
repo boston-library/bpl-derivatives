@@ -8,7 +8,7 @@ module BPL::Derivatives
     end
 
     def self.retrieve_datastream(object, directives)
-      dsid = directives.fetch(:dsid))
+      dsid = directives.fetch(:dsid)
       raise ArgumentError, "#{dsid} is blank" if dsid.blank?
       output_datastream(object, dsid)
     end

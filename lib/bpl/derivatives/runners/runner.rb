@@ -36,7 +36,7 @@ module BPL
 
       def self.input_object(object_or_filename, options)
         if options.key?(:source_datastream)
-          return BPL::Derivatives::DatastreamDecorator.new(object_or_filename, opts.fetch(:source_datastream))
+          return BPL::Derivatives::DatastreamDecorator.new(object_or_filename, options.fetch(:source_datastream))
         else
           return BPL::Derivatives::InputObjectDecorator.new(object_or_filename)
         end

@@ -36,12 +36,12 @@ module BPL
 
     autoload_under 'services' do
       autoload :RetrieveSourceFileService
+      autoload :RetrieveSourceFileFromDatastreamService
       autoload :PersistOutputFileService
       autoload :PersistBasicContainedOutputFileService
       autoload :PersistDatastreamOutputService
       autoload :PersistFileSystemOutputService
       autoload :TempfileService
-      autoload :DatastreamTempfileService
       autoload :MimeTypeService
     end
 
@@ -66,9 +66,9 @@ module BPL
       self.class.config
     end
 
-    def derivatize(opts={})
+    def derivatize(opts = {})
       runner = opts[:runner] ? opts.delete(:runner) : :image
-      "BPL::Derivatives::#{runner.to_s.classify}".constantize.new(self, opts)
+      "BPL::Derivatives::#{runner.to_s.classify}Derivatives".constantize.create(self, opts)
     end
   end
 end

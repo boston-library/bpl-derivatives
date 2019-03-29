@@ -1,5 +1,5 @@
 module BPL::Derivatives
-  class RetreieveSourceFileFromDatastreamService
+  class RetrieveSourceFileFromDatastreamService
     # Retrieves the source
     # @param [BPL::Derivatives::DatastreamDecorator] object the source file is attached to
     # @param [Hash] options
