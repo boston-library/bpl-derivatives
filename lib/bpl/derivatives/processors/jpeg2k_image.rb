@@ -76,7 +76,7 @@ module BPL::Derivatives::Processors
       end
 
       def tmp_file(ext)
-        Dir::Tmpname.create(['sufia', ext], BPL::Derivatives.config.temp_file_base) {}
+        Dir::Tmpname.create(['bpl-derivative', ext], BPL::Derivatives.config.temp_file_base) {}
       end
 
       def long_dim(image)
@@ -108,19 +108,20 @@ module BPL::Derivatives::Processors
           self.class.encode(f.path, recipe, output_file)
         end
       end
-      finalize_derivative_output(File.open(output_file, 'rb'))
+      finalize_derivative_output(File.open(output_file, "rb", &:read))
       File.unlink(output_file)
     end
 
+
     protected
 
-      def preprocess(image, opts = {})
-        # resize: <geometry>, to_srgb: <bool>, src_quality: 'color'|'gray'
-        image.combine_options do |c|
-          c.resize(opts[:resize]) if opts[:resize]
-          c.profile self.class.srgb_profile_path if opts[:src_quality] == 'color' && opts[:to_srgb]
-        end
-        image
+    def preprocess(image, opts = {})
+      # resize: <geometry>, to_srgb: <bool>, src_quality: 'color'|'gray'
+      image.combine_options do |c|
+        c.resize(opts[:resize]) if opts[:resize]
+        c.profile self.class.srgb_profile_path if opts[:src_quality] == 'color' && opts[:to_srgb]
       end
+      image
+    end
   end
 end

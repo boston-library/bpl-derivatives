@@ -5,7 +5,7 @@ module BPL::Derivatives
     attr_accessor :content, :original_object
     def initialize(content, original_object = nil)
       super(content)
-      self.content = content
+      self.content = StringIO.new(content)
       self.original_object = original_object
     end
   end
