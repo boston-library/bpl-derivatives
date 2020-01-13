@@ -14,7 +14,7 @@ module BPL::Derivatives::Processors
       def encode(path, options, output_file)
         inopts = options[INPUT_OPTIONS] ||= "-y"
         outopts = options[OUTPUT_OPTIONS] ||= ""
-        execute "#{BPL::Derivatives.ffmpeg_path} #{inopts} -i #{Shellwords.escape(path)} #{outopts} #{output_file}"
+        execute "#{BPL::Derivatives.config.ffmpeg_path} #{inopts} -i #{Shellwords.escape(path)} #{outopts} #{output_file}"
       end
     end
   end
